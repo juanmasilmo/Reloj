@@ -1,65 +1,81 @@
-import { Table, Column, Model, DataType, Default } from 'sequelize-typescript';
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('agentes_articulos', {
-    id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    id_licencia: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    id_agente_leu: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    fecha_desde: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    fecha_hasta: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    id_articulo_leu: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    estado: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    cant_dias: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    fecha_abm: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    usuario_abm: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    id_articulo_reloj: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    }
-  }, {
-    sequelize,
-    tableName: 'agentes_articulos',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "agentes_articulos_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
-  });
-};
+import { Table, Column, Model, DataType, Default, ForeignKey } from 'sequelize-typescript';
+
+@Table({
+  tableName: 'agentes_articulos',
+  schema: 'public',
+  timestamps: false,
+})
+class AgenteArticulo extends Model {
+
+  @Column({
+    autoIncrement: true,
+    type: DataType.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+  })
+  id: number;
+
+  @ForeignKey(() => Licencia)  // Relación con la tabla 'Licencia'
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  id_licencia: number;
+
+  @ForeignKey(() => AgenteLeu)  // Relación con la tabla 'AgenteLeu'
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  id_agente_leu: number;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  fecha_desde: Date;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  fecha_hasta: Date;
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  id_articulo_leu: number;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  estado: string;
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  cant_dias: number;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  fecha_abm: Date;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  usuario_abm: string;
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  id_articulo_reloj: number;
+}
+
+export default AgenteArticulo;
