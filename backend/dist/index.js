@@ -1,11 +1,6 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const server_1 = __importDefault(require("./server"));
+import server from "./server";
 const PORT = 4000;
-server_1.default.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`El server esta corriendo el el port ${PORT}`);
 });
 //# sourceMappingURL=index.js.map
