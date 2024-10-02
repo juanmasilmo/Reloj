@@ -1,100 +1,100 @@
-var DataTypes = require("sequelize").DataTypes;
-var _agentes_articulos = require("./agentes_articulos");
-var _articulos = require("./articulos");
-var _calendario_agente = require("./calendario_agente");
-var _calendario_anual = require("./calendario_anual");
-var _categorias = require("./categorias");
-var _circunscripciones = require("./circunscripciones");
-var _dependencias = require("./dependencias");
-var _estados = require("./estados");
-var _grupos = require("./grupos");
-var _grupos_items = require("./grupos_items");
-var _grupos_opciones = require("./grupos_opciones");
-var _instructivo = require("./instructivo");
-var _items = require("./items");
-var _localidades = require("./localidades");
-var _opciones = require("./opciones");
-var _personas = require("./personas");
-var _sistema_versiones = require("./sistema_versiones");
-var _usuario_dependencias = require("./usuario_dependencias");
-var _usuarios = require("./usuarios");
+import { Sequelize, DataTypes } from 'sequelize';
+import AgentesArticulos from './agentes_articulos';
+import Articulos from './articulos';
+import CalendarioAgente from './calendario_agente';
+import CalendarioAnual from './calendario_anual';
+import Categorias from './categorias';
+import Circunscripciones from './circunscripciones';
+import Dependencias from './dependencias';
+import Estados from './estados';
+import Grupos from './grupos';
+import GruposItems from './grupos_items';
+import GruposOpciones from './grupos_opciones';
+import Instructivo from './instructivo';
+import Items from './items';
+import Localidades from './localidades';
+import Opciones from './opciones';
+import Personas from './personas';
+import SistemaVersiones from './sistema_versiones';
+import UsuarioDependencias from './usuario_dependencias';
+import Usuarios from './usuarios';
 
-function initModels(sequelize) {
-  var agentes_articulos = _agentes_articulos(sequelize, DataTypes);
-  var articulos = _articulos(sequelize, DataTypes);
-  var calendario_agente = _calendario_agente(sequelize, DataTypes);
-  var calendario_anual = _calendario_anual(sequelize, DataTypes);
-  var categorias = _categorias(sequelize, DataTypes);
-  var circunscripciones = _circunscripciones(sequelize, DataTypes);
-  var dependencias = _dependencias(sequelize, DataTypes);
-  var estados = _estados(sequelize, DataTypes);
-  var grupos = _grupos(sequelize, DataTypes);
-  var grupos_items = _grupos_items(sequelize, DataTypes);
-  var grupos_opciones = _grupos_opciones(sequelize, DataTypes);
-  var instructivo = _instructivo(sequelize, DataTypes);
-  var items = _items(sequelize, DataTypes);
-  var localidades = _localidades(sequelize, DataTypes);
-  var opciones = _opciones(sequelize, DataTypes);
-  var personas = _personas(sequelize, DataTypes);
-  var sistema_versiones = _sistema_versiones(sequelize, DataTypes);
-  var usuario_dependencias = _usuario_dependencias(sequelize, DataTypes);
-  var usuarios = _usuarios(sequelize, DataTypes);
+export function initModels(sequelize: Sequelize) {
+  const agentesArticulos = AgentesArticulos(sequelize, DataTypes);
+  const articulos = Articulos(sequelize, DataTypes);
+  const calendarioAgente = CalendarioAgente(sequelize, DataTypes);
+  const calendarioAnual = CalendarioAnual(sequelize, DataTypes);
+  const categorias = Categorias(sequelize, DataTypes);
+  const circunscripciones = Circunscripciones(sequelize, DataTypes);
+  const dependencias = Dependencias(sequelize, DataTypes);
+  const estados = Estados(sequelize, DataTypes);
+  const grupos = Grupos(sequelize, DataTypes);
+  const gruposItems = GruposItems(sequelize, DataTypes);
+  const gruposOpciones = GruposOpciones(sequelize, DataTypes);
+  const instructivo = Instructivo(sequelize, DataTypes);
+  const items = Items(sequelize, DataTypes);
+  const localidades = Localidades(sequelize, DataTypes);
+  const opciones = Opciones(sequelize, DataTypes);
+  const personas = Personas(sequelize, DataTypes);
+  const sistemaVersiones = SistemaVersiones(sequelize, DataTypes);
+  const usuarioDependencias = UsuarioDependencias(sequelize, DataTypes);
+  const usuarios = Usuarios(sequelize, DataTypes);
 
-  dependencias.belongsToMany(usuarios, { as: 'id_usuario_usuarios', through: usuario_dependencias, foreignKey: "id_dependencia", otherKey: "id_usuario" });
-  grupos.belongsToMany(items, { as: 'id_item_items', through: grupos_items, foreignKey: "id_grupo", otherKey: "id_item" });
-  grupos.belongsToMany(opciones, { as: 'id_opcion_opciones', through: grupos_opciones, foreignKey: "id_grupo", otherKey: "id_opcion" });
-  items.belongsToMany(grupos, { as: 'id_grupo_grupos', through: grupos_items, foreignKey: "id_item", otherKey: "id_grupo" });
-  opciones.belongsToMany(grupos, { as: 'id_grupo_grupos_grupos_opciones', through: grupos_opciones, foreignKey: "id_opcion", otherKey: "id_grupo" });
-  usuarios.belongsToMany(dependencias, { as: 'id_dependencia_dependencia', through: usuario_dependencias, foreignKey: "id_usuario", otherKey: "id_dependencia" });
-  personas.belongsTo(categorias, { as: "id_categoria_categoria", foreignKey: "id_categoria"});
-  categorias.hasMany(personas, { as: "personas", foreignKey: "id_categoria"});
-  localidades.belongsTo(circunscripciones, { as: "id_circunscripcion_circunscripcione", foreignKey: "id_circunscripcion"});
-  circunscripciones.hasMany(localidades, { as: "localidades", foreignKey: "id_circunscripcion"});
-  personas.belongsTo(dependencias, { as: "id_dependencia_dependencia", foreignKey: "id_dependencia"});
-  dependencias.hasMany(personas, { as: "personas", foreignKey: "id_dependencia"});
-  usuario_dependencias.belongsTo(dependencias, { as: "id_dependencia_dependencia", foreignKey: "id_dependencia"});
-  dependencias.hasMany(usuario_dependencias, { as: "usuario_dependencia", foreignKey: "id_dependencia"});
-  calendario_anual.belongsTo(estados, { as: "id_estado_estado", foreignKey: "id_estado"});
-  estados.hasMany(calendario_anual, { as: "calendario_anuals", foreignKey: "id_estado"});
-  grupos_items.belongsTo(grupos, { as: "id_grupo_grupo", foreignKey: "id_grupo"});
-  grupos.hasMany(grupos_items, { as: "grupos_items", foreignKey: "id_grupo"});
-  grupos_opciones.belongsTo(grupos, { as: "id_grupo_grupo", foreignKey: "id_grupo"});
-  grupos.hasMany(grupos_opciones, { as: "grupos_opciones", foreignKey: "id_grupo"});
-  usuarios.belongsTo(grupos, { as: "id_grupo_grupo", foreignKey: "id_grupo"});
-  grupos.hasMany(usuarios, { as: "usuarios", foreignKey: "id_grupo"});
-  grupos_items.belongsTo(items, { as: "id_item_item", foreignKey: "id_item"});
-  items.hasMany(grupos_items, { as: "grupos_items", foreignKey: "id_item"});
-  dependencias.belongsTo(localidades, { as: "id_localidad_localidade", foreignKey: "id_localidad"});
-  localidades.hasMany(dependencias, { as: "dependencia", foreignKey: "id_localidad"});
-  grupos_opciones.belongsTo(opciones, { as: "id_opcion_opcione", foreignKey: "id_opcion"});
-  opciones.hasMany(grupos_opciones, { as: "grupos_opciones", foreignKey: "id_opcion"});
-  items.belongsTo(opciones, { as: "id_opcion_opcione", foreignKey: "id_opcion"});
-  opciones.hasMany(items, { as: "items", foreignKey: "id_opcion"});
-  usuario_dependencias.belongsTo(usuarios, { as: "id_usuario_usuario", foreignKey: "id_usuario"});
-  usuarios.hasMany(usuario_dependencias, { as: "usuario_dependencia", foreignKey: "id_usuario"});
+  // Relaciones
+  dependencias.belongsToMany(usuarios, { as: 'id_usuario_usuarios', through: usuarioDependencias, foreignKey: "id_dependencia", otherKey: "id_usuario" });
+  grupos.belongsToMany(items, { as: 'id_item_items', through: gruposItems, foreignKey: "id_grupo", otherKey: "id_item" });
+  grupos.belongsToMany(opciones, { as: 'id_opcion_opciones', through: gruposOpciones, foreignKey: "id_grupo", otherKey: "id_opcion" });
+  items.belongsToMany(grupos, { as: 'id_grupo_grupos', through: gruposItems, foreignKey: "id_item", otherKey: "id_grupo" });
+  opciones.belongsToMany(grupos, { as: 'id_grupo_grupos_grupos_opciones', through: gruposOpciones, foreignKey: "id_opcion", otherKey: "id_grupo" });
+  usuarios.belongsToMany(dependencias, { as: 'id_dependencia_dependencia', through: usuarioDependencias, foreignKey: "id_usuario", otherKey: "id_dependencia" });
+  personas.belongsTo(categorias, { as: "id_categoria_categoria", foreignKey: "id_categoria" });
+  categorias.hasMany(personas, { as: "personas", foreignKey: "id_categoria" });
+  localidades.belongsTo(circunscripciones, { as: "id_circunscripcion_circunscripcione", foreignKey: "id_circunscripcion" });
+  circunscripciones.hasMany(localidades, { as: "localidades", foreignKey: "id_circunscripcion" });
+  personas.belongsTo(dependencias, { as: "id_dependencia_dependencia", foreignKey: "id_dependencia" });
+  dependencias.hasMany(personas, { as: "personas", foreignKey: "id_dependencia" });
+  usuarioDependencias.belongsTo(dependencias, { as: "id_dependencia_dependencia", foreignKey: "id_dependencia" });
+  dependencias.hasMany(usuarioDependencias, { as: "usuario_dependencia", foreignKey: "id_dependencia" });
+  calendarioAnual.belongsTo(estados, { as: "id_estado_estado", foreignKey: "id_estado" });
+  estados.hasMany(calendarioAnual, { as: "calendario_anuals", foreignKey: "id_estado" });
+  gruposItems.belongsTo(grupos, { as: "id_grupo_grupo", foreignKey: "id_grupo" });
+  grupos.hasMany(gruposItems, { as: "grupos_items", foreignKey: "id_grupo" });
+  gruposOpciones.belongsTo(grupos, { as: "id_grupo_grupo", foreignKey: "id_grupo" });
+  grupos.hasMany(gruposOpciones, { as: "grupos_opciones", foreignKey: "id_grupo" });
+  usuarios.belongsTo(grupos, { as: "id_grupo_grupo", foreignKey: "id_grupo" });
+  grupos.hasMany(usuarios, { as: "usuarios", foreignKey: "id_grupo" });
+  gruposItems.belongsTo(items, { as: "id_item_item", foreignKey: "id_item" });
+  items.hasMany(gruposItems, { as: "grupos_items", foreignKey: "id_item" });
+  dependencias.belongsTo(localidades, { as: "id_localidad_localidade", foreignKey: "id_localidad" });
+  localidades.hasMany(dependencias, { as: "dependencia", foreignKey: "id_localidad" });
+  gruposOpciones.belongsTo(opciones, { as: "id_opcion_opcione", foreignKey: "id_opcion" });
+  opciones.hasMany(gruposOpciones, { as: "grupos_opciones", foreignKey: "id_opcion" });
+  items.belongsTo(opciones, { as: "id_opcion_opcione", foreignKey: "id_opcion" });
+  opciones.hasMany(items, { as: "items", foreignKey: "id_opcion" });
+  usuarioDependencias.belongsTo(usuarios, { as: "id_usuario_usuario", foreignKey: "id_usuario" });
+  usuarios.hasMany(usuarioDependencias, { as: "usuario_dependencia", foreignKey: "id_usuario" });
 
   return {
-    agentes_articulos,
+    agentesArticulos,
     articulos,
-    calendario_agente,
-    calendario_anual,
+    calendarioAgente,
+    calendarioAnual,
     categorias,
     circunscripciones,
     dependencias,
     estados,
     grupos,
-    grupos_items,
-    grupos_opciones,
+    gruposItems,
+    gruposOpciones,
     instructivo,
     items,
     localidades,
     opciones,
     personas,
-    sistema_versiones,
-    usuario_dependencias,
+    sistemaVersiones,
+    usuarioDependencias,
     usuarios,
   };
 }
-module.exports = initModels;
-module.exports.initModels = initModels;
-module.exports.default = initModels;
+
+export default initModels;
