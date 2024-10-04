@@ -38,6 +38,7 @@ export const getIdAgentesArticulos = async (req: Request, res: Response) => {
   }
 };
 
+// soft delete
 export const activoAgenteArticulo = async (req: Request, res: Response) => {
   try {
     const agenteArticuloActivo = await AgenteArticulo.findByPk(req.params.id);
@@ -52,7 +53,7 @@ export const activoAgenteArticulo = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error al actualizar el agente articulo" });
   }
 };
-
+//eliminar
 export const eliminarAgenteArticulo = async (req: Request, res: Response) => {
   try {
     const agenteArticuloEliminar = await AgenteArticulo.destroy({
