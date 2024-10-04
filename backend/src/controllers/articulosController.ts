@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import Articulos from "../models/articulos";
-import { eliminarAgenteArticulo } from "./agentes_articulosController";
 
 //crear artirculo
 export const crearArticulo = async (req: Request, res: Response) => {
