@@ -1,8 +1,5 @@
 import { Request, Response } from "express";
 import CalendarioAgente from "../models/calendario_agente";
-import CalendarioAgente from "./../models/calendario_agente";
-import CalendarioAgente from "../models/calendario_agente";
-import { eliminarCalenAgen } from "./calendario_agenteController";
 
 //crear articulo
 export const crear_CalendarioAgente = async (req: Request, res: Response) => {
@@ -32,7 +29,7 @@ export const getIdCalendarioAgente = async (req: Request, res: Response) => {
     const calendarioAgenteId = await CalendarioAgente.findByPk(req.params.id);
     res.status(calendarioAgenteId ? 200 : 400).json(
       calendarioAgenteId || {
-        message: "No se encuentra el id del calendario agente",
+        message: "No se encuentra el id del calendario agente"
       }
     );
   } catch (error) {
@@ -59,7 +56,7 @@ export const activoCalendarioAgente = async (req: Request, res: Response) => {
 export const eliminar_CalenAgen = async (req: Request, res: Response) => {
   try {
     const eliminarCalenAgen = await CalendarioAgente.destroy({
-      where: { id: req.params.id },
+      where: { id: req.params.id }
     });
     if (eliminarCalenAgen) {
       res.status(204).json({ message: "Calendario agente eliminado" });
