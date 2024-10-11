@@ -37,3 +37,32 @@ export const getCategId = async (req: Request, res: Response) => {
     res.status(500).json({Message: ""})
   }
 };
+
+//soft delete
+export const activCateg = async (req:Request, res: Response) => {
+  try {
+    const categActiv = await Categorias.findByPk(req.params.id);
+    if(categActiv){
+      await categActiv.update(req.body);
+      res.status(200).json(categActiv);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({Message: "Error al actualizar"});
+  }
+};
+
+//eliminar registro en categorias
+export const delCateg = async (req: Request, res: Response) =>{
+  try {
+    const categDel = await Categorias.destroy({
+      where: {id: req.params.id}
+    });
+    if (categDel){
+      res.status(204).json({Message: "Registro eliminado con exito"});
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({message: "Error al eliminar categoria"});
+  }
+};

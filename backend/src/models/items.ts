@@ -1,4 +1,5 @@
-import { Table, Column, Model, DataType, ForeignKey } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import Opciones from './opciones';
 
 @Table({
   tableName: 'items',
@@ -17,40 +18,50 @@ class Items extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: true,
+    validate: {
+      len: [0, 255], // Limita la longitud de la descripción
+    },
   })
-  descripcion?: string; // Uso de '?' para indicar que es opcional
+  descripcion?: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-  enlace?: string; // Uso de '?' para indicar que es opcional
+  enlace?: string;
 
-  @ForeignKey(() => Opciones) // Definición de la clave foránea
+  @ForeignKey(() => Opciones)
   @Column({
     type: DataType.INTEGER,
     allowNull: true,
   })
-  id_opcion?: number; // Uso de '?' para indicar que es opcional
+  id_opcion?: number;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: true,
   })
-  orden?: number; // Uso de '?' para indicar que es opcional
+  orden?: number;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: true,
     defaultValue: 1,
   })
-  estado?: number; // Uso de '?' para indicar que es opcional
+  estado?: number;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-  usuario_abm?: string; // Uso de '?' para indicar que es opcional
+  usuario_abm?: string;
+
+  // Relación con Opciones
+  @BelongsTo(() => Opciones, {
+    foreignKey: 'id_opcion',
+    as: 'opcion',
+  })
+  opcion?: Opciones;
 }
 
 export default Items;

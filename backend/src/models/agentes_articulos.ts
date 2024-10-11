@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, Default, ForeignKey } from 'sequelize-typescript';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
   tableName: 'agentes_articulos',
@@ -10,19 +10,18 @@ class AgenteArticulo extends Model {
   @Column({
     autoIncrement: true,
     type: DataType.INTEGER,
-    allowNull: false,
     primaryKey: true,
   })
   id: number;
 
-  @ForeignKey(() => Licencia)  // Relación con la tabla 'Licencia'
+  // Campo id_licencia sin referencia a otra tabla, ya que viene por JSON
   @Column({
     type: DataType.INTEGER,
     allowNull: true,
   })
   id_licencia: number;
 
-  @ForeignKey(() => AgenteLeu)  // Relación con la tabla 'AgenteLeu'
+  // Campo id_agente_leu sin referencia a otra tabla, ya que viene por JSON
   @Column({
     type: DataType.INTEGER,
     allowNull: true,
@@ -48,7 +47,7 @@ class AgenteArticulo extends Model {
   id_articulo_leu: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(255),  // Puedes ajustar la longitud según lo que necesites
     allowNull: true,
   })
   estado: string;
@@ -66,7 +65,7 @@ class AgenteArticulo extends Model {
   fecha_abm: Date;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(255),  // Puedes ajustar la longitud según lo que necesites
     allowNull: true,
   })
   usuario_abm: string;

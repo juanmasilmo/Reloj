@@ -1,5 +1,5 @@
 import { Table, Column, Model, DataType, ForeignKey, Index } from 'sequelize-typescript';
-import { Estados } from './estados';  // Asegúrate de importar correctamente el modelo relacionado
+import { Estados } from './estados';  // Asegúrate de que el modelo 'Estados' esté correctamente importado
 
 @Table({
   tableName: 'calendario_anual',
@@ -22,11 +22,10 @@ class CalendarioAnual extends Model {
   })
   id_estado: number;
 
-  @Index('fecha_inicio')
+  @Index('idx_fecha_inicio')  // Defino el índice sin unique si no quieres restringir duplicados
   @Column({
     type: DataType.DATE,
     allowNull: true,
-    unique: true,
   })
   fecha_inicio: Date;
 
@@ -37,7 +36,7 @@ class CalendarioAnual extends Model {
   fecha_fin: Date;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(50),  // Definir una longitud máxima para la columna string
     allowNull: true,
   })
   usuario_abm: string;

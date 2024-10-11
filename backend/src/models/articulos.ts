@@ -6,7 +6,7 @@ import { Table, Column, Model, DataType, Default } from 'sequelize-typescript';
   timestamps: false,
   indexes: [
     {
-      name: "articulos_pkey",
+      name: "articulos_pkey",  // Si este índice es redundante, podrías eliminarlo
       unique: true,
       fields: ['id'],
     },
@@ -28,19 +28,19 @@ class Articulos extends Model {
   id_leu: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(50),  // Definir longitud máxima si es posible
     allowNull: false,
   })
   nro_articulo: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(10),  // Definir longitud máxima si es posible
     allowNull: true,
   })
   inciso: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(255),  // Definir longitud máxima si es posible
     allowNull: false,
   })
   descripcion: string;
@@ -58,7 +58,7 @@ class Articulos extends Model {
   cantidad_anual: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(255),  // Definir longitud máxima si es posible
     allowNull: true,
   })
   observacion: string;
@@ -99,7 +99,7 @@ class Articulos extends Model {
   excluye_feria: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(50),  // Definir longitud máxima si es posible
     allowNull: true,
   })
   tipo_licencias: string;
@@ -126,7 +126,7 @@ class Articulos extends Model {
   cobra_presentismo: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(255),  // Definir longitud máxima si es posible
     allowNull: true,
   })
   usuario_abm: string;
@@ -148,7 +148,7 @@ class Articulos extends Model {
   desc_pasajes: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(50),  // Definir longitud máxima si es posible
     allowNull: true,
   })
   color: string;
