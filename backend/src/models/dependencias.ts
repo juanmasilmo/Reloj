@@ -1,5 +1,5 @@
 import { Table, Column, Model, DataType, ForeignKey } from 'sequelize-typescript';
-import { Localidades } from './localidades'; // Asumiendo que tienes el modelo Localidades.
+import { Localidades } from './localidades'; // Asegúrate de que el modelo Localidades esté correctamente importado.
 
 @Table({
   tableName: 'dependencias',
@@ -16,7 +16,7 @@ class Dependencias extends Model {
   id: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(255), // Se define una longitud máxima
     allowNull: true,
   })
   descripcion: string;
@@ -43,7 +43,7 @@ class Dependencias extends Model {
   padre: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100), // Se define una longitud máxima
     allowNull: true,
   })
   usuario_abm: string;
@@ -55,7 +55,7 @@ class Dependencias extends Model {
   id_leu: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(255), // Se define una longitud máxima
     allowNull: true,
   })
   direccion: string;

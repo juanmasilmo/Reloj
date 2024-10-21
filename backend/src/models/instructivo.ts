@@ -1,4 +1,5 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey } from 'sequelize-typescript';
+import Categorias from './categorias';
 
 @Table({
   tableName: 'instructivo',
@@ -17,6 +18,9 @@ class Instructivo extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    validate: {
+      len: [1, 255], // Limitar la longitud del título
+    },
   })
   titulo: string;
 
@@ -24,19 +28,27 @@ class Instructivo extends Model {
     type: DataType.STRING,
     allowNull: true,
   })
-  descripcion?: string; // Uso de '?' para indicar que es opcional
+  descripcion?: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-  url_video?: string; // Uso de '?' para indicar que es opcional
+  url_video?: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-  url_documento?: string; // Uso de '?' para indicar que es opcional
+  url_documento?: string;
+
+  // Relación con Categorías (opcional)
+  @ForeignKey(() => Categorias)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  id_categoria?: number;
 }
 
 export default Instructivo;

@@ -15,8 +15,8 @@ class Circunscripciones extends Model {
   id: number;
 
   @Column({
-    type: DataType.STRING,
-    allowNull: true,
+    type: DataType.STRING(100), // Se define una longitud máxima
+    allowNull: true, // Cambiar a false si se requiere
   })
   descripcion: string;
 

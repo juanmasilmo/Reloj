@@ -44,52 +44,53 @@ export function initModels(sequelize: Sequelize) {
   ]);
 
   // Definición de relaciones entre tablas
-  Dependencias.belongsToMany(Usuarios, { as: 'id_usuario_usuarios', through: UsuarioDependencias, foreignKey: "id_dependencia", otherKey: "id_usuario" });
-  Grupos.belongsToMany(Items, { as: 'id_item_items', through: GruposItems, foreignKey: "id_grupo", otherKey: "id_item" });
-  Grupos.belongsToMany(Opciones, { as: 'id_opcion_opciones', through: GruposOpciones, foreignKey: "id_grupo", otherKey: "id_opcion" });
-  Items.belongsToMany(Grupos, { as: 'id_grupo_grupos', through: GruposItems, foreignKey: "id_item", otherKey: "id_grupo" });
-  Opciones.belongsToMany(Grupos, { as: 'id_grupo_grupos_grupos_opciones', through: GruposOpciones, foreignKey: "id_opcion", otherKey: "id_grupo" });
-  Usuarios.belongsToMany(Dependencias, { as: 'id_dependencia_dependencia', through: UsuarioDependencias, foreignKey: "id_usuario", otherKey: "id_dependencia" });
-  
+  // Relaciones many-to-many
+  Dependencias.belongsToMany(Usuarios, { as: 'Usuarios', through: UsuarioDependencias, foreignKey: "id_dependencia", otherKey: "id_usuario" });
+  Grupos.belongsToMany(Items, { as: 'Items', through: GruposItems, foreignKey: "id_grupo", otherKey: "id_item" });
+  Grupos.belongsToMany(Opciones, { as: 'Opciones', through: GruposOpciones, foreignKey: "id_grupo", otherKey: "id_opcion" });
+  Items.belongsToMany(Grupos, { as: 'Grupos', through: GruposItems, foreignKey: "id_item", otherKey: "id_grupo" });
+  Opciones.belongsToMany(Grupos, { as: 'Grupos', through: GruposOpciones, foreignKey: "id_opcion", otherKey: "id_grupo" });
+  Usuarios.belongsToMany(Dependencias, { as: 'Dependencias', through: UsuarioDependencias, foreignKey: "id_usuario", otherKey: "id_dependencia" });
+
   // Relaciones individuales
-  Personas.belongsTo(Categorias, { as: "id_categoria_categoria", foreignKey: "id_categoria" });
-  Categorias.hasMany(Personas, { as: "personas", foreignKey: "id_categoria" });
+  Personas.belongsTo(Categorias, { as: "Categoria", foreignKey: "id_categoria" });
+  Categorias.hasMany(Personas, { as: "Personas", foreignKey: "id_categoria" });
   
-  Localidades.belongsTo(Circunscripciones, { as: "id_circunscripcion_circunscripcione", foreignKey: "id_circunscripcion" });
-  Circunscripciones.hasMany(Localidades, { as: "localidades", foreignKey: "id_circunscripcion" });
+  Localidades.belongsTo(Circunscripciones, { as: "Circunscripcion", foreignKey: "id_circunscripcion" });
+  Circunscripciones.hasMany(Localidades, { as: "Localidades", foreignKey: "id_circunscripcion" });
   
-  Personas.belongsTo(Dependencias, { as: "id_dependencia_dependencia", foreignKey: "id_dependencia" });
-  Dependencias.hasMany(Personas, { as: "personas", foreignKey: "id_dependencia" });
+  Personas.belongsTo(Dependencias, { as: "Dependencia", foreignKey: "id_dependencia" });
+  Dependencias.hasMany(Personas, { as: "Personas", foreignKey: "id_dependencia" });
   
-  UsuarioDependencias.belongsTo(Dependencias, { as: "id_dependencia_dependencia", foreignKey: "id_dependencia" });
-  Dependencias.hasMany(UsuarioDependencias, { as: "usuario_dependencia", foreignKey: "id_dependencia" });
+  UsuarioDependencias.belongsTo(Dependencias, { as: "Dependencia", foreignKey: "id_dependencia" });
+  Dependencias.hasMany(UsuarioDependencias, { as: "UsuarioDependencias", foreignKey: "id_dependencia" });
   
-  CalendarioAnual.belongsTo(Estados, { as: "id_estado_estado", foreignKey: "id_estado" });
-  Estados.hasMany(CalendarioAnual, { as: "calendario_anuals", foreignKey: "id_estado" });
+  CalendarioAnual.belongsTo(Estados, { as: "Estado", foreignKey: "id_estado" });
+  Estados.hasMany(CalendarioAnual, { as: "CalendarioAnuales", foreignKey: "id_estado" });
   
-  GruposItems.belongsTo(Grupos, { as: "id_grupo_grupo", foreignKey: "id_grupo" });
-  Grupos.hasMany(GruposItems, { as: "grupos_items", foreignKey: "id_grupo" });
+  GruposItems.belongsTo(Grupos, { as: "Grupo", foreignKey: "id_grupo" });
+  Grupos.hasMany(GruposItems, { as: "GruposItems", foreignKey: "id_grupo" });
   
-  GruposOpciones.belongsTo(Grupos, { as: "id_grupo_grupo", foreignKey: "id_grupo" });
-  Grupos.hasMany(GruposOpciones, { as: "grupos_opciones", foreignKey: "id_grupo" });
+  GruposOpciones.belongsTo(Grupos, { as: "Grupo", foreignKey: "id_grupo" });
+  Grupos.hasMany(GruposOpciones, { as: "GruposOpciones", foreignKey: "id_grupo" });
   
-  Usuarios.belongsTo(Grupos, { as: "id_grupo_grupo", foreignKey: "id_grupo" });
-  Grupos.hasMany(Usuarios, { as: "usuarios", foreignKey: "id_grupo" });
+  Usuarios.belongsTo(Grupos, { as: "Grupo", foreignKey: "id_grupo" });
+  Grupos.hasMany(Usuarios, { as: "Usuarios", foreignKey: "id_grupo" });
   
-  GruposItems.belongsTo(Items, { as: "id_item_item", foreignKey: "id_item" });
-  Items.hasMany(GruposItems, { as: "grupos_items", foreignKey: "id_item" });
+  GruposItems.belongsTo(Items, { as: "Item", foreignKey: "id_item" });
+  Items.hasMany(GruposItems, { as: "GruposItems", foreignKey: "id_item" });
   
-  Dependencias.belongsTo(Localidades, { as: "id_localidad_localidade", foreignKey: "id_localidad" });
-  Localidades.hasMany(Dependencias, { as: "dependencia", foreignKey: "id_localidad" });
+  Dependencias.belongsTo(Localidades, { as: "Localidad", foreignKey: "id_localidad" });
+  Localidades.hasMany(Dependencias, { as: "Dependencias", foreignKey: "id_localidad" });
   
-  GruposOpciones.belongsTo(Opciones, { as: "id_opcion_opcione", foreignKey: "id_opcion" });
-  Opciones.hasMany(GruposOpciones, { as: "grupos_opciones", foreignKey: "id_opcion" });
+  GruposOpciones.belongsTo(Opciones, { as: "Opcion", foreignKey: "id_opcion" });
+  Opciones.hasMany(GruposOpciones, { as: "GruposOpciones", foreignKey: "id_opcion" });
   
-  Items.belongsTo(Opciones, { as: "id_opcion_opcione", foreignKey: "id_opcion" });
-  Opciones.hasMany(Items, { as: "items", foreignKey: "id_opcion" });
+  Items.belongsTo(Opciones, { as: "Opcion", foreignKey: "id_opcion" });
+  Opciones.hasMany(Items, { as: "Items", foreignKey: "id_opcion" });
   
-  UsuarioDependencias.belongsTo(Usuarios, { as: "id_usuario_usuario", foreignKey: "id_usuario" });
-  Usuarios.hasMany(UsuarioDependencias, { as: "usuario_dependencia", foreignKey: "id_usuario" });
+  UsuarioDependencias.belongsTo(Usuarios, { as: "Usuario", foreignKey: "id_usuario" });
+  Usuarios.hasMany(UsuarioDependencias, { as: "UsuarioDependencias", foreignKey: "id_usuario" });
 
   return {
     AgenteArticulo,

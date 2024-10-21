@@ -15,7 +15,7 @@ class Grupos extends Model {
   id: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100), // Longitud máxima recomendada
     allowNull: true,
   })
   descripcion?: string; // Uso de '?' para indicar que es opcional
@@ -28,7 +28,7 @@ class Grupos extends Model {
   estado?: number; // Uso de '?' para indicar que es opcional
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(50), // Longitud máxima recomendada
     allowNull: true,
   })
   usuario_abm?: string; // Uso de '?' para indicar que es opcional

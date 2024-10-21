@@ -15,7 +15,7 @@ class Categorias extends Model {
   id: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100), // Se define una longitud máxima
     allowNull: true,
   })
   descripcion: string;
@@ -27,7 +27,7 @@ class Categorias extends Model {
   cod_categoria: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100), // Se define una longitud máxima
     allowNull: true,
   })
   descripcion_tipo_categoria: string;
@@ -40,13 +40,13 @@ class Categorias extends Model {
 
   @Column({
     type: DataType.INTEGER,
-    allowNull: true,
+    allowNull: false, // Se puede considerar como no nulo
     defaultValue: 1,
   })
   estado: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(50), // Se define una longitud máxima
     allowNull: true,
   })
   usuario_abm: string;

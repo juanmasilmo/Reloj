@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey } from 'sequelize-typescript';
 
 @Table({
   tableName: 'grupos_opciones',
@@ -6,6 +6,7 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
   timestamps: false,
 })
 class GruposOpciones extends Model {
+  @ForeignKey(() => 'grupos') // Asegúrate de que el modelo grupos esté correctamente importado
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
@@ -17,6 +18,7 @@ class GruposOpciones extends Model {
   })
   id_grupo: number;
 
+  @ForeignKey(() => 'opciones') // Asegúrate de que el modelo opciones esté correctamente importado
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
@@ -29,7 +31,7 @@ class GruposOpciones extends Model {
   id_opcion: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100), // Longitud máxima recomendada
     allowNull: true,
   })
   usuario_abm?: string; // Uso de '?' para indicar que es opcional
